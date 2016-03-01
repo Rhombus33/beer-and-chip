@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 
-module.exports = new Sequelize('BeerAndChip', 'root', '', {
+module.exports = new Sequelize('BeerAndChip', 'root', 'password', {
   host: 'localhost',
   dialect: 'mysql',
   define: {
