@@ -22,11 +22,12 @@ var events = [
     name: "Alex's Graduation" }
 ];
 
-var items = [{name: 'cake', EventId: 2},{name: 'milk', EventId: 3}];
+var items = [{name: 'cake', EventId: 1},{name: 'milk', EventId: 1}];
 
 var guests = [
   { EventId: 1,
-    name: 'Fred' },
+    name: 'Diamond',
+    email: 'diamond.d.wheeler@gmail.com' },
   { EventId: 2,
     name: 'John' },
   { EventId: 3,
