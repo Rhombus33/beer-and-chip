@@ -1,21 +1,72 @@
 angular.module('eventDetails', ['eventList'])
-.controller('eventDetailsController', ['$scope', '$http', '$filter', '$log' ,'eventDetailsFactory','EventFactory', '$cookies', '$routeParams', function($scope, $http, $filter, $log, eventDetailsFactory, EventFactory, $cookies, $routeParams) {	
-  $scope.newItem;
-  $scope.newGuest; 
-  $scope.newEmail; 
+.controller('eventDetailsController', ['$scope', '$http', 'requestFactory', '$cookies', '$routeParams', function($scope, $http, requestFactory, $cookies, $routeParams) {  
+/** ADD ITEM AND ADD GUEST INPUT BOXES **/
+
+  // Holds text input from add item and add guest input boxes
+  $scope.itemName;
+  $scope.guestName; 
+  $scope.guestEmail; 
+
+  // clear text in text field, takes a string as input
+  $scope.resetField = function(field) {
+    $scope[field] = "";
+  };
+
+  // sends a POST request to insert a new item 
+  $scope.addItemFunc = function(itemName){
+    var newItem = {
+      EventId: $cookies.get('eventID'),
+      name: itemName // this is coming from ng-model
+    };
+    return $http({
+      method: 'POST',
+      url: '/api/items',
+      data: newItem
+    }).then(function(){
+        $scope.resetField('newItem'); // reset text field
+    });
+
+  };
+
+  // sends a POST request to insert a new guest
+  $scope.addGuestFunc = function(guestName, guestEmail){
+    var newGuest = {
+      EventId: $cookies.get('eventID'),
+      name: guestName, //this is coming from ng-model
+      email: guestEmail
+    };
+    return $http({
+      method: 'POST',
+      url: '/api/guests',
+      data: newGuest
+    }).then(function(){
+        $scope.resetField('guestName'); 
+        $scope.resetField('guestEmail'); 
+    });
+
+  };
+
+/** DRAG AND DROP TABLE **/
+
+  // Holds guests and the items they are bringing (guests)
+  // The selected property is specific to drag-and-drop (which item is selected)
   $scope.models = {
     selected: null,
-    guests: {}
+    guests: {} // each guest will be a column in the table
   };
+
+  // For simplicity when refering to the ng-model guests
   var guests =  $scope.models.guests;
 
   var initializeDetails = function() {
-    eventDetailsFactory.getEvents($routeParams.eventID)
+    // Makes request to server for all event details
+    requestFactory.getEvents($routeParams.eventID)
       .then(function(details) {
-      	
+        
+        // temporarily holds guestId: [items]
         var temp = {};
 
-        // Assign items to 
+        // Populate temp
         for (var j = 0; j < details.items.length; j++) {
           var GuestId = details.items[j].GuestId;
           var item = details.items[j];
@@ -26,18 +77,69 @@ angular.module('eventDetails', ['eventList'])
           }
         }        
 
+        // Populate the ng-model guests
         for (var i = 0; i < details.guests.length; i++){
           var guestName = details.guests[i].name;
           var guestId = details.guests[i].id;
+          // Adds guestName and guestId to ng-model guests 
+          // and assigns guests an items array or an empty array
           guests[guestName + ' ' + guestId] = temp[guestId] ? temp[guestId] : [];
         }
       })
   }
 
+  // Fires when an item is moved to a column
   $scope.reassignItem = function(item, guestInfo) {
     var guestId = $scope.getId(guestInfo);
+    requestFactory.updateItem(item, guestId);
+    // nessesary for drag-and-drop visualization
+    // return false to reject visual update
+    return item; 
+  }
 
-    $http({
+  // parse guestInfo for guest name
+  $scope.getId = function(guestInfo) {
+    var name = guestInfo.match(/([^\s])+/g);
+    return name[1];
+  }
+
+  // parse guestInfo for guest Id 
+  $scope.getName = function(guestInfo) {
+    var name = guestInfo.match(/([^\s])+/);
+    return name[0];
+  }
+
+/** EMAIL **/
+  // sends unique eventDetails url to all guests
+  $scope.email = function() {
+    var eventID = $cookies.get("eventID")
+    requestFactory.sendEmails(eventID);
+  }
+
+/** INITIALIZE ON PAGE LOAD **/
+  initializeDetails();
+}])
+
+.factory('requestFactory', function($http, $cookies) {
+  var getEvents = function(eventID) {
+    return $http({
+      method: 'GET',
+      url: '/api/eventDetails/' + eventID
+    })
+    .then(function(res) {
+      return res.data;
+    })
+  };
+
+  var sendEmails = function(eventID) {
+    return $http({
+      method: 'GET',
+      url: '/api/email/' + eventID
+    });
+  };
+
+  var updateItem = function(item, guestId) {
+    return $http({
       method: 'PUT',
       url: '/api/items/' + item.id,
       data: {GuestId: guestId}
@@ -45,87 +147,11 @@ angular.module('eventDetails', ['eventList'])
     .then(function() {
       console.log("UPDATED DB");
     })
-    return item;
-  }
-
-  $scope.getId = function(guestInfo) {
-    var name = guestInfo.match(/([^\s])+/g);
-    return name[1];
-  }
-
-  $scope.getName = function(guestInfo) {
-    var name = guestInfo.match(/([^\s])+/);
-    return name[0];
-  }
-
-  $scope.email = function() {
-    var eventID = $cookies.get("eventID")
-    return $http({
-      method: 'GET',
-      url: '/api/email/' + eventID
-    });
-  }
-
-  //resets the forms:  
-  $scope.resetGuest = function() {
-    $scope.newGuest = "";
-    $scope.newEmail = "";
-  };
-
-  $scope.resetItem = function() {
-    $scope.newItem = "";
-  };
-
-  //this function is for the addd Item form 
-  $scope.addItemFunc = function(newItem){
-    //console.log("newItem", newItem);
-    var toPost = {
-      EventId: $cookies.get('eventID'),
-      name: newItem //this is coming from ng-model
-    };
-    return $http({
-      method: 'POST',
-      url: '/api/items',
-      data: toPost
-    }).then(function(){
-        $scope.resetItem();
-    });
-
-  };
-
-  //this function is for the add Guest form 
-  $scope.addGuestFunc = function(newGuest, newEmail){
-    console.log("newGuest", newGuest);
-    var toPost = {
-      EventId: $cookies.get('eventID'),
-      name: newGuest, //this is coming from ng-model
-      email: newEmail
-    };
-    return $http({
-      method: 'POST',
-      url: '/api/guests',
-      data: toPost
-    }).then(function(){
-
-        $scope.resetGuest(); 
-    });
-
-  };
-  initializeDetails();
-  setInterval(initializeDetails, 5000)
-}])
-.factory('eventDetailsFactory', function($http, $cookies) {
-  var getEvents = function(eventID) {
-    return $http({
-      method: 'GET',
-      url: '/api/eventDetails/' + eventID
-    })
-    .then(function(resp) {
-      return resp.data;
-    })
   };
 
   return {
     getEvents: getEvents,
+    sendEmails: sendEmails,
+    updateItem: updateItem
   }
 })

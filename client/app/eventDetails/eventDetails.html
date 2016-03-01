@@ -49,24 +49,24 @@
       <h5>Forget anything?</h5>
       <!-- add item field -->
       <span style="display:inline-block">
-        <input type="text" ng-model="newItem" name="addItem" id="addItem" value="" placeholder="Enter Item" />
+        <input type="text" ng-model="itemName" name="addItem" id="addItem" value="" placeholder="Enter Item" />
       </span> 
       <!-- add item button -->
-      <span class="button alt disabled" ng-click="addItemFunc(newItem)">
+      <span class="button alt disabled" ng-click="addItemFunc(itemName)">
         Add item
       </span>
 
       <!-- add guest field  -->
       <span style="display:inline-block">
-        <input type="text"  ng-model="newGuest" name="addGuest" id="addGuest" value="" placeholder="Enter Guest" />
+        <input type="text"  ng-model="guestName" name="addGuest" id="addGuest" value="" placeholder="Enter Guest" />
       </span>
       <span style="display:inline-block">
-        <input type="text"  ng-model="newEmail" name="addEmail" id="addEmail" value="" placeholder="Enter Email" />
+        <input type="text"  ng-model="guestEmail" name="addEmail" id="addEmail" value="" placeholder="Enter Email" />
       </span>
       
 
       <!--add guest button  -->
-      <span class="button alt disabled" ng-click="addGuestFunc(newGuest, newEmail)">
+      <span class="button alt disabled" ng-click="addGuestFunc(guestName, guestEmail)">
         Add guest
       </span>
     </div>

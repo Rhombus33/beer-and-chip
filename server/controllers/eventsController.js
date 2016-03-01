@@ -23,7 +23,7 @@ module.exports = {
       EventQuery.addOne(data.userID, data.event, function(event) {
         // Add event's guests
         GuestQuery.addAll(event.id, data.guests, function() {
-          // Add event's items, currently not assigned to a basket
+          // Add event's items and assign to guests
           ItemQuery.addAll(event.id, data.items, function() {
             // End response and send nothing back
             res.send(); 

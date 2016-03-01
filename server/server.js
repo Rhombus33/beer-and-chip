@@ -45,7 +45,7 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
-//auth
+/***** FACEBOOK AUTH *****/
 var User = db.User;
 var FACEBOOK_APP_ID = '553060631520944';
 var FACEBOOK_APP_SECRET = '6d6d7fe25752c6bb43490d4d915f42af';
@@ -91,6 +91,5 @@ if(!module.parent) {
   app.listen(app.get('port'));
   console.log('Listening on', app.get('port'));
 }
-
 
 module.exports.app = app;

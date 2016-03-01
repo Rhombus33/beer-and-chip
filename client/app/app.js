@@ -24,8 +24,8 @@ angular.module('myApp', [
 
 
   //THis was in Fred's code, but we don't have tokens. 
-    // // We add our $httpInterceptor into the array
-    // // of interceptors. Think of it like middleware for your ajax calls
+    // We add our $httpInterceptor into the array
+    // of interceptors. Think of it like middleware for your ajax calls
     // $httpProvider.interceptors.push('AttachTokens');
 }])
 
