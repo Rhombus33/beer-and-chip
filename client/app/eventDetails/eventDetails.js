@@ -54,6 +54,7 @@ angular.module('eventDetails', ['eventList'])
     selected: null,
     guests: {} // each guest will be a column in the table
   };
+  $scope.details;
 
   // For simplicity when refering to the ng-model guests
   var guests =  $scope.models.guests;
@@ -63,6 +64,9 @@ angular.module('eventDetails', ['eventList'])
     requestFactory.getEvents($routeParams.eventID)
       .then(function(details) {
         
+        // set event details to ng-model details
+        $scope.details = details;
+
         // temporarily holds guestId: [items]
         var temp = {};
 
