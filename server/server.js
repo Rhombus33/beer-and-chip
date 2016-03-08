@@ -1,7 +1,7 @@
 var express = require('express');
 var db = require('./models/models');
 
-//middleware
+// Require middleware
 var parser = require('body-parser');
 var morgan = require('morgan');
 var passport = require('passport');
@@ -10,30 +10,31 @@ var LocalStrategy = require('passport-local').Strategy;
 var jwt = require('jwt-simple');
 var cookieParser = require('cookie-parser');
 
-//router
+// Router
 var router = require('./config/routes.js');
 
+// Set up server
 var app = express();
 
-//set port and listen
+// Set port and listen
 var port = process.env.PORT || 3000;
 app.listen(port, function(){
   console.log('Listening on port:'+port);
 });
 
-//logging and parsing
+// Logging and parsing
 app.use(morgan('dev'));
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-//set up routes
+// Set up routes
 app.use('/api', router);
 
-//serve client files
+// Serve client files
 app.use(express.static(__dirname + '/../client'));
 
-//initialize passport
+// Initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -85,11 +86,5 @@ app.get('/auth/facebook/callback',
 
     res.redirect('/');
   });
-
-//if we are being rung directly, run the server
-if(!module.parent) {
-  app.listen(app.get('port'));
-  console.log('Listening on', app.get('port'));
-}
 
 module.exports.app = app;

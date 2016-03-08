@@ -23,7 +23,7 @@ angular.module('eventDetails', ['eventList'])
       url: '/api/items',
       data: newItem
     }).then(function(){
-        $scope.resetField('newItem'); // reset text field
+        $scope.resetField('itemName'); // reset text field
     });
 
   };
@@ -56,6 +56,9 @@ angular.module('eventDetails', ['eventList'])
   };
   $scope.details;
 
+  // ng-model for storing event details
+  $scope.details;
+
   // For simplicity when refering to the ng-model guests
   var guests =  $scope.models.guests;
 
@@ -64,7 +67,8 @@ angular.module('eventDetails', ['eventList'])
     requestFactory.getEvents($routeParams.eventID)
       .then(function(details) {
         
-        // set event details to ng-model details
+
+        // assign event details to ng-model details
         $scope.details = details;
 
         // temporarily holds guestId: [items]
