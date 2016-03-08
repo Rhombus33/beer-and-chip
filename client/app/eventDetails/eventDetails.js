@@ -23,7 +23,7 @@ angular.module('eventDetails', ['eventList'])
       url: '/api/items',
       data: newItem
     }).then(function(){
-        $scope.resetField('newItem'); // reset text field
+        $scope.resetField('itemName'); // reset text field
     });
 
   };
