@@ -7,54 +7,42 @@ angular.module('eventDetails', ['eventList'])
   $scope.guestName; 
   $scope.guestEmail; 
 
-  // clear text in text field, takes a string as input
-  $scope.resetField = function(field) {
-    $scope[field] = "";
-  };
-
-  // sends a POST request to insert a new item 
+  // sends a POST request to insert new item into the DB
   $scope.addItemFunc = function(itemName){
-    var newItem = {
+    $scope.itemName = '' // reset text field
+    var newItem = { 
       EventId: $cookies.get('eventID'),
       name: itemName // this is coming from ng-model
     };
-    return $http({
-      method: 'POST',
-      url: '/api/items',
-      data: newItem
-    }).then(function(){
-        $scope.resetField('itemName'); // reset text field
-    });
-
+    requestFactory.addItem(newItem)
+      .then(function() { 
+        initializeDetails(); // update view
+      });
   };
 
-  // sends a POST request to insert a new guest
+  // sends a POST request to insert new guest into the DB
   $scope.addGuestFunc = function(guestName, guestEmail){
     var newGuest = {
       EventId: $cookies.get('eventID'),
       name: guestName, //this is coming from ng-model
       email: guestEmail
     };
-    return $http({
-      method: 'POST',
-      url: '/api/guests',
-      data: newGuest
-    }).then(function(){
-        $scope.resetField('guestName'); 
-        $scope.resetField('guestEmail'); 
-    });
-
+    requestFactory.addGuest(newGuest)
+      .then(function() { 
+        initializeDetails(); // update view
+      });
+    $scope.guestName = '';
+    $scope.guestEmail = '';
   };
 
 /** DRAG AND DROP TABLE **/
 
-  // Holds guests and the items they are bringing (guests)
-  // The selected property is specific to drag-and-drop (which item is selected)
+  // guests holds guests and the items they are bringing
+  // selected is specific to drag-and-drop (can specify cb on item selected)
   $scope.models = {
     selected: null,
-    guests: {} // each guest will be a column in the table
+    guests: {}
   };
-  $scope.details;
 
   // ng-model for storing event details
   $scope.details;
@@ -67,7 +55,6 @@ angular.module('eventDetails', ['eventList'])
     requestFactory.getEvents($routeParams.eventID)
       .then(function(details) {
         
-
         // assign event details to ng-model details
         $scope.details = details;
 
@@ -101,20 +88,20 @@ angular.module('eventDetails', ['eventList'])
     var guestId = $scope.getId(guestInfo);
     requestFactory.updateItem(item, guestId);
     // nessesary for drag-and-drop visualization
-    // return false to reject visual update
+    // return false to reject client-side visual update
     return item; 
   }
 
   // parse guestInfo for guest name
   $scope.getId = function(guestInfo) {
     var name = guestInfo.match(/([^\s])+/g);
-    return name[1];
+    return name[name.length - 1]; // id comes after the last space
   }
 
   // parse guestInfo for guest Id 
   $scope.getName = function(guestInfo) {
-    var name = guestInfo.match(/([^\s])+/);
-    return name[0];
+    var name = guestInfo.match(/([^\s])+/g);
+    return name.slice(0, name.length - 1).join(' '); // name is everything before the last space
   }
 
 /** EMAIL **/
@@ -129,12 +116,14 @@ angular.module('eventDetails', ['eventList'])
 }])
 
 .factory('requestFactory', function($http, $cookies) {
+  // All requests return a promise to chain further functionality
   var getEvents = function(eventID) {
     return $http({
       method: 'GET',
       url: '/api/eventDetails/' + eventID
     })
     .then(function(res) {
+      // returns a promise with data from the server
       return res.data;
     })
   };
@@ -157,9 +146,27 @@ angular.module('eventDetails', ['eventList'])
     })
   };
 
+  var addGuest = function(newGuest) {
+    return $http({
+      method: 'POST',
+      url: '/api/guests',
+      data: newGuest
+    });
+  };
+
+  var addItem = function(newItem) {
+    return $http({
+      method: 'POST',
+      url: '/api/items',
+      data: newItem
+    });
+  };
+
   return {
     getEvents: getEvents,
     sendEmails: sendEmails,
-    updateItem: updateItem
+    updateItem: updateItem,
+    addGuest: addGuest,
+    addItem: addItem
   }
 })
