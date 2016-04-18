@@ -25,7 +25,7 @@ module.exports = {
   // add multiple guests to one event
   addAll: function(eventID, guests, callback) {
     // Add dummy guest to hold all unassigned items
-    guests.push({name: "Unassigned", EventId: eventID});
+    guests.unshift({name: "Unassigned", EventId: eventID});
 
     // Add eventId to all guesets
     for (var i=0; i < guests.length; i++) {

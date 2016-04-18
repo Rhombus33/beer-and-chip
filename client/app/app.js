@@ -1,8 +1,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('myApp', [
   'createEvent', 'eventList', 'eventDetails', 'ngRoute', 'auth', 'dndLists'
-
-])
+  ])
 .config(['$routeProvider', '$httpProvider',function($routeProvider, $httpProvider) {
   $routeProvider.when('/', {
     templateUrl: '/app/create/create.html',
@@ -21,14 +20,7 @@ angular.module('myApp', [
     controller: 'AuthController'
   });
   $routeProvider.otherwise({redirectTo: '/'});
-
-
-  //THis was in Fred's code, but we don't have tokens. 
-    // We add our $httpInterceptor into the array
-    // of interceptors. Think of it like middleware for your ajax calls
-    // $httpProvider.interceptors.push('AttachTokens');
 }])
-
 .run(['$rootScope', '$location', 'AuthFactory', function($rootScope, $location, AuthFactory) {
   $rootScope.$on('$routeChangeStart', function(event, toState) {
     console.log(toState)

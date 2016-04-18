@@ -1,46 +1,29 @@
-<!-- 
-<style>
-
-
-</style>
-
- -->
-  
-
 <!-- Banner is here b/c of problems with keeping clear nav bar showing -->
 <section id="banner" >
-    <h2>Beer or Chip</h2>
-    <p>everyone makes the party</p>
-</section> 
- 
+  <h2>Beer or Chip</h2>
+  <p>everyone makes the party</p>
+</section>
+
 <!-- Main -->
 <section id="main" class="wrapper">
   <div class="container">
-
     <header class="major">
       <h2>Create Event</h2>
       <p>Tell us about your event</p>
     </header>
-
-
     <div>
       <form novalidate class="event-form">
-        <label>Event Name:</label> 
+        <label>Event Name:</label>
         <input type="text" ng-model="event.name" />
-        <br />
-
-        <label>Event Date:</label> 
+        <br/>
+        <label>Event Date:</label>
         <input type="datetime-local" id="exampleInput" name="input" ng-model="event.date"
            placeholder="yyyy-MM-dd" min="2016-01-01" max="2016-12-31" required />
-        <br />
-
-        <label>Event Location:</label> 
+        <br/>
+        <label>Event Location:</label>
         <input type="text" ng-model="event.location" />
-        <br />
-
-        <label>Guests:</label> 
-        <!-- <textarea ng-model="hold.guests" ng-list="&#10;" ng-trim="false"></textarea> -->
-
+        <br/>
+        <label>Guests:</label>
         <div ng-repeat="guest in guests">
           <label>
             <span style="display:inline-block; width:45%;"><input type="text" ng-model="guest.name" placeholder="Enter Name..."></span>
@@ -49,32 +32,21 @@
           </label>
         </div>
         <input ng-click="addGuest()" type="button" class="button alt small" value="Add Guest" style="width:10%">
-        <!-- <button ng-click="addGuest()">Add another guest</button> -->
-        <br />
-        <br />
-
-
+        <br/>
+        <br/>
         <label>Stuff you need for your party:</label>
-        <!-- <textarea ng-model="hold.items" ng-list="&#10;" ng-trim="false"></textarea> -->
         <div ng-repeat="item in items">
           <label>
             <span style="display:inline-block; width:90%"><input type="text" ng-model="item.name" placeholder="Enter Item..."></span>
             <input type="button" value="X" ng-click="removeItem($index)" class="button special small" >
           </label>
         </div>
-        <!-- <button ng-click="addItem()">Add another item</button> -->
         <input type="button" value="Add Item" ng-click="addItem()" class="button alt small" style="width:10%">
-        <br />
-        <br />
-
+        <br/>
+        <br/>
         <input type="button" ng-click="reset()" value="Reset" />
-
-
-        <input type="submit" ng-click="update(event, hold)" value="Submit" />
-
-
+        <input type="submit" ng-click="update(event)" value="Submit" />
       </form>
     </div>
-
   </div>
-</section> 
+</section>

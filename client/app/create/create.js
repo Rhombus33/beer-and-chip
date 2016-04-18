@@ -1,11 +1,7 @@
 angular.module('createEvent', [])
-
 .controller('CreateController', ['$scope', 'CreateFactory', '$location', '$cookies', function($scope, CreateFactory, $location, $cookies) {
-  
   $scope.event = {};
-  $scope.hold = {};
   $scope.data = {};
-
   $scope.guests = [{}];
   $scope.items = [{}];
 
@@ -25,9 +21,8 @@ angular.module('createEvent', [])
     $scope.items.splice(item, 1);
   };
 
-
 //Update function is invoked in submit button in create.html
-  $scope.update = function(event, hold) {
+  $scope.update = function(event) {
     $scope.data.userID = $cookies.get('userID');
     var guestArray = [];
     for (var i = 0; i < $scope.guests.length; i++) {
@@ -36,28 +31,25 @@ angular.module('createEvent', [])
       }
     }
     var itemArray = [];
-    // console.log("ITEMS", hold);
     for (var j=0; j < $scope.items.length; j++) {
       if($scope.items[j] && $scope.items[j].name) {
         itemArray.push($scope.items[j]);
       }
     }
 
-
     $scope.data.event = event;
     $scope.data.guests = guestArray;
     $scope.data.items = itemArray;
 
-    // $scope.master = angular.copy(event);
     CreateFactory.addEvent($scope.data)
     .then(function () {
       $location.path('/events');
     })
   };
+
   // clears out the form
   $scope.reset = function() {
     $scope.event = {};
-    $scope.hold = {};
     $scope.guests = [{}];
     $scope.items = [{}];
     $scope.data = {};

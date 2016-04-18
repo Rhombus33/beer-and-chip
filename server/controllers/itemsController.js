@@ -2,7 +2,7 @@ var ItemQuery = require('../queries/itemQueries');
 
 module.exports = {
 	get: function(req, res) {
-		var eventID = req.params.eventID; 
+		var eventID = req.params.eventID;
 		ItemQuery.getAll(eventID, function(items){
 			res.json(items);
 		});
@@ -10,8 +10,9 @@ module.exports = {
 
 	post: function(req, res) {
 		var item = req.body;
+		console.log(item);
 		ItemQuery.addOne(item, function(newItem){
-			res.json(newItem); 
+			res.json(newItem);
 		});
 	},
 
@@ -24,7 +25,7 @@ module.exports = {
 	},
 
 	delete: function(req, res) {
-		var itemID = req.params.itemID; 
+		var itemID = req.params.itemID;
 		ItemQuery.deleteOne(itemID, function(){
 			res.send();
 		});

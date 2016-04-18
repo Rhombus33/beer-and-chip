@@ -1,21 +1,19 @@
 <section id="banner" >
 	<h2>Beer or Chip</h2>
 	<p>everyone makes the party</p>
-</section> 
+</section>
 
 <section id="main" class="wrapper">
   <div class="container">
-
     <header class="major">
       <h2>Event Details</h2>
     </header>
   	<div>
-  		<div>		
-  		  <h4>{{details.event.name}}</h4> 
+  		<div>
+  		  <h4>{{details.event.name}}</h4>
   		  <h5>{{details.event.location}}</h5>
-  		  <h5>{{details.event.date| date: 'fullDate'}}</h5> 
+  		  <h5>{{details.event.date| date: 'fullDate'}}</h5>
   		</div>
-    	
       <!-- Drag-and-Drop Table -->
       <div class="table-wrapper">
     		<div class="itemsTable row">
@@ -42,20 +40,17 @@
           </div>
         </div>
       </div>
-
     </div>
-
     <div>
       <h5>Forget anything?</h5>
       <!-- add item field -->
       <span style="display:inline-block">
         <input type="text" ng-model="itemName" name="addItem" id="addItem" value="" placeholder="Enter Item" />
-      </span> 
+      </span>
       <!-- add item button -->
-      <span class="button alt disabled" ng-click="addItemFunc(itemName)">
+      <span class="button alt disabled" ng-click="addItem(itemName)">
         Add item
       </span>
-
       <!-- add guest field  -->
       <span style="display:inline-block">
         <input type="text"  ng-model="guestName" name="addGuest" id="addGuest" value="" placeholder="Enter Guest" />
@@ -63,19 +58,16 @@
       <span style="display:inline-block">
         <input type="text"  ng-model="guestEmail" name="addEmail" id="addEmail" value="" placeholder="Enter Email" />
       </span>
-      
-
       <!--add guest button  -->
-      <span class="button alt disabled" ng-click="addGuestFunc(guestName, guestEmail)">
+      <span class="button alt disabled" ng-click="addGuest(guestName, guestEmail)">
         Add guest
       </span>
     </div>
-
-    <br><br>
-
-    <!-- Send email button -->  
+    <br/>
+    <br/>
+    <!-- Send email button -->
     <button type="button" class="nodemailer button" ng-click="email()">
       Send Event Details to Guests
     </button>
   </div>
-</section> 
+</section>

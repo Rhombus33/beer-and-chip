@@ -13,7 +13,7 @@
     <meta name="keywords" content="" />
 <!--********************************************************-->
 <!-- These are the files that our template needs:        -->
-  
+
     <script src="js/jquery.min.js"></script>
     <script src="js/skel.min.js"></script>
     <script src="js/skel-layers.min.js"></script>
@@ -23,111 +23,95 @@
       <link rel="stylesheet" href="css/style.css" />
       <link rel="stylesheet" href="css/style-xlarge.css" />
     </noscript>
- 
+
 <!-- ************************************************-->
   </head>
-  <body class="landing" ng-app='myApp' >  
+  <body class="landing" ng-app='myApp' >
     <!-- ng-app-'myApp' -->
 
     <!-- Header -->
-      <header id="header" ng-controller='AuthController'>
-        <h1><a href="index.html">Beer Or Chip</a></h1>
-        <nav id="nav">
-          <ul>
-            <li><a href="#/">Create</a></li>
-            <li><a href="#/events">Events</a></li>
-            <li><a href=""  ng-click='logout()' >Sign Out</a></li>
-          </ul>
-        </nav>
-      </header>
+    <header id="header" ng-controller='AuthController'>
+      <h1><a href="index.html">Beer Or Chip</a></h1>
+      <nav id="nav">
+        <ul>
+          <li><a href="#/">Create</a></li>
+          <li><a href="#/events">Events</a></li>
+          <li><a href=""  ng-click='logout()' >Sign Out</a></li>
+        </ul>
+      </nav>
+    </header>
 
     <!-- Banner -->
 <!--******************* THIS IS THE FRONT PAGE BANNER AND DESCRIPTION *******-->
 
-
-
-
-
-
-
-
     <!-- Main -->
 
-          <!-- THIS IS WHERE OUR ANGULAR VIEWS WILL BE INSERTED -->
-          <div ng-view> </div>
-            
-
-
-
-
+    <!-- THIS IS WHERE OUR ANGULAR VIEWS WILL BE INSERTED -->
+    <div ng-view> </div>
 
 <!--*******************************        -->
 
 
-    <!-- Footer -->
-      <footer id="footer">
-        <div class="container">
-          <section class="links">
-            <div class="row">
-              <section class="3u 6u(medium) 12u$(small)">
-                <h3>Contributors</h3>
-                <ul class="unstyled">
-                  <li><a href="#"></a></li>
-                  <li><a href="#">Alex S.</a></li>
-                  <li><a href="#">Deniz M.</a></li>
-                  <li><a href="#">Diamond W.</a></li>
-                  <li><a href="#">Saumitra S.</a></li>
-                </ul>
-              </section>
-              
+  <!-- Footer -->
+    <footer id="footer">
+      <div class="container">
+        <section class="links">
+          <div class="row">
+            <section class="3u 6u(medium) 12u$(small)">
+              <h3>Contributors</h3>
+              <ul class="unstyled">
+                <li><a href="#"></a></li>
+                <li><a href="#">Alex S.</a></li>
+                <li><a href="#">Deniz M.</a></li>
+                <li><a href="#">Diamond W.</a></li>
+                <li><a href="#">Saumitra S.</a></li>
+              </ul>
+            </section>
+
 <!-- this is for the bottom with the facebook logos -->
 
-            </div>
-          </section>
-          <div class="row">
-            <div class="8u 12u$(medium)">
-              <ul class="copyright">
-                <li>&copy; Cantillating Zygote.</li>
-                <li>Design: <a href="http://templated.co">TEMPLATED</a></li>
-                <li>Images: <a href="http://unsplash.com">Unsplash</a></li>
-              </ul>
-            </div>
-            <div class="4u$ 12u$(medium)">
-              <ul class="icons">
-                <li>
-                  <a class="icon rounded fa-facebook" href="https://youtu.be/dQw4w9WgXcQ"><span class="label">Facebook</span></a>
-                </li>
-                <li>
-                  <a class="icon rounded fa-twitter" href="https://youtu.be/dQw4w9WgXcQ"><span class="label">Twitter</span></a>
-                </li>
-                <li>
-                  <a class="icon rounded fa-google-plus" href="https://youtu.be/dQw4w9WgXcQ"><span class="label">Google+</span></a>
-                </li>
-                <li>
-                  <a class="icon rounded fa-linkedin" href="https://youtu.be/dQw4w9WgXcQ"><span class="label">LinkedIn</span></a>
-                </li>
-              </ul>
-            </div>
+          </div>
+        </section>
+        <div class="row">
+          <div class="8u 12u$(medium)">
+            <ul class="copyright">
+              <li>&copy; Cantillating Zygote.</li>
+              <li>Design: <a href="http://templated.co">TEMPLATED</a></li>
+              <li>Images: <a href="http://unsplash.com">Unsplash</a></li>
+            </ul>
+          </div>
+          <div class="4u$ 12u$(medium)">
+            <ul class="icons">
+              <li>
+                <a class="icon rounded fa-facebook" href="https://youtu.be/dQw4w9WgXcQ"><span class="label">Facebook</span></a>
+              </li>
+              <li>
+                <a class="icon rounded fa-twitter" href="https://youtu.be/dQw4w9WgXcQ"><span class="label">Twitter</span></a>
+              </li>
+              <li>
+                <a class="icon rounded fa-google-plus" href="https://youtu.be/dQw4w9WgXcQ"><span class="label">Google+</span></a>
+              </li>
+              <li>
+                <a class="icon rounded fa-linkedin" href="https://youtu.be/dQw4w9WgXcQ"><span class="label">LinkedIn</span></a>
+              </li>
+            </ul>
           </div>
         </div>
-      </footer>
+      </div>
+    </footer>
 
+    <!-- Angular Scripts  -->
+    <script src="https://code.angularjs.org/1.5.0/angular.js"></script>
+    <script src="https://code.angularjs.org/1.5.0/angular-route.js"></script>
+    <script src="https://code.angularjs.org/1.5.0/angular-cookies.js"></script>
+    <script src="/lib/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
 
-      <!-- Angular Scripts  -->
-<script src="https://code.angularjs.org/1.5.0/angular.js"></script>
-<script src="https://code.angularjs.org/1.5.0/angular-route.js"></script>
-<script src="https://code.angularjs.org/1.5.0/angular-cookies.js"></script>
-<script src="/lib/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
-
-<!-- THIS IS THE START OF THE ANGULAR APP.JS -->
-<script src="/app/events/events.js"></script>
-<script src="/app/create/create.js"></script>
-<script src="/app/auth/auth.js"></script>
-<script src="/app/eventDetails/eventDetails.js"></script>
-<script src="/app/app.js"></script>
-
-
-
+    <!-- THIS IS THE START OF THE ANGULAR APP.JS -->
+    <script src="/app/events/events.js"></script>
+    <script src="/app/create/create.js"></script>
+    <script src="/app/auth/auth.js"></script>
+    <script src="/app/eventDetails/eventDetails.js"></script>
+    <script src="/app/app.js"></script>
 
   </body>
 </html>

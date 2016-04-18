@@ -1,35 +1,33 @@
 angular.module('eventDetails', ['eventList'])
-.controller('eventDetailsController', ['$scope', '$http', 'requestFactory', '$cookies', '$routeParams', function($scope, $http, requestFactory, $cookies, $routeParams) {  
-/** ADD ITEM AND ADD GUEST INPUT BOXES **/
-
+.controller('eventDetailsController', ['$scope', '$http', 'requestFactory', '$cookies', '$routeParams', function($scope, $http, requestFactory, $cookies, $routeParams) {
   // Holds text input from add item and add guest input boxes
   $scope.itemName;
-  $scope.guestName; 
-  $scope.guestEmail; 
+  $scope.guestName;
+  $scope.guestEmail;
 
   // sends a POST request to insert new item into the DB
-  $scope.addItemFunc = function(itemName){
-    $scope.itemName = '' // reset text field
-    var newItem = { 
+  $scope.addItem = function(itemName){
+    $scope.itemName = '';
+    var newItem = {
       EventId: $cookies.get('eventID'),
-      name: itemName // this is coming from ng-model
+      name: itemName
     };
     requestFactory.addItem(newItem)
-      .then(function() { 
-        initializeDetails(); // update view
+      .then(function() {
+        initializeDetails();
       });
   };
 
   // sends a POST request to insert new guest into the DB
-  $scope.addGuestFunc = function(guestName, guestEmail){
+  $scope.addGuest = function(guestName, guestEmail){
     var newGuest = {
       EventId: $cookies.get('eventID'),
-      name: guestName, //this is coming from ng-model
+      name: guestName,
       email: guestEmail
     };
     requestFactory.addGuest(newGuest)
-      .then(function() { 
-        initializeDetails(); // update view
+      .then(function() {
+        initializeDetails();
       });
     $scope.guestName = '';
     $scope.guestEmail = '';
@@ -54,7 +52,7 @@ angular.module('eventDetails', ['eventList'])
     // Makes request to server for all event details
     requestFactory.getEvents($routeParams.eventID)
       .then(function(details) {
-        
+
         // assign event details to ng-model details
         $scope.details = details;
 
@@ -70,13 +68,13 @@ angular.module('eventDetails', ['eventList'])
           } else {
             temp[GuestId] = [item];
           }
-        }        
+        }
 
         // Populate the ng-model guests
-        for (var i = 0; i < details.guests.length; i++){
+        for (var i = 0; i < details.guests.length; i++) {
           var guestName = details.guests[i].name;
           var guestId = details.guests[i].id;
-          // Adds guestName and guestId to ng-model guests 
+          // Adds guestName and guestId to ng-model guests
           // and assigns guests an items array or an empty array
           guests[guestName + ' ' + guestId] = temp[guestId] ? temp[guestId] : [];
         }
@@ -89,16 +87,16 @@ angular.module('eventDetails', ['eventList'])
     requestFactory.updateItem(item, guestId);
     // nessesary for drag-and-drop visualization
     // return false to reject client-side visual update
-    return item; 
+    return item;
   }
 
-  // parse guestInfo for guest name
+  // parse guestInfo for guest Id
   $scope.getId = function(guestInfo) {
     var name = guestInfo.match(/([^\s])+/g);
     return name[name.length - 1]; // id comes after the last space
   }
 
-  // parse guestInfo for guest Id 
+  // parse guestInfo for guest name
   $scope.getName = function(guestInfo) {
     var name = guestInfo.match(/([^\s])+/g);
     return name.slice(0, name.length - 1).join(' '); // name is everything before the last space
@@ -159,6 +157,12 @@ angular.module('eventDetails', ['eventList'])
       method: 'POST',
       url: '/api/items',
       data: newItem
+    })
+    .then(function() {
+      console.log("ADDED ITEM");
+    })
+    .catch(function(e) {
+      console.log(e);
     });
   };
 

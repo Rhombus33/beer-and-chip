@@ -1,5 +1,4 @@
 angular.module('auth', ['ngCookies'])
-
 .controller('AuthController', function($scope, $window, $location, $cookies, AuthFactory) {
   $scope.user = {};
 
@@ -7,10 +6,7 @@ angular.module('auth', ['ngCookies'])
     AuthFactory.signout();
   }
 })
-
 .factory('AuthFactory', function($http, $window, $location, $cookies) {
-
-
   var isAuth = function () {
     return !!$cookies.get('displayName');
   };
@@ -20,12 +16,8 @@ angular.module('auth', ['ngCookies'])
     angular.forEach(cookies, function (v, k) {
         $cookies.remove(k);
     });
-
     $location.path('/signin');
   };
-
-
-
 
   return {
     isAuth: isAuth,

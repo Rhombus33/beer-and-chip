@@ -1,3 +1,4 @@
+// REMOVE JWT AND FACTOR OUT MIDDLEWARE INTO CONFIGS
 var express = require('express');
 var db = require('./models/models');
 

@@ -1,9 +1,8 @@
 angular.module('eventList', [])
-
 .controller('EventsController', ['$scope', 'EventFactory', '$location','$cookies', function($scope, EventFactory, $location, $cookies) {
 
   //this is where we will store our data after our initializeEvents
-  //api request, $scope.data: 
+  //api request, $scope.data:
   $scope.data = { };
   //this requests the data and puts it into $scope.data
   var initializeEvents = function() {
@@ -25,11 +24,7 @@ angular.module('eventList', [])
     $location.path('/eventdetails/' + event.id);
   }
 
-  //when the page is requested by the user, the initialize
-  //function automatically runs:
-  //*@*@*@*WARNING NEED TO COMMENT THIS LINE AFTER DATABASE FUNCTIONS
   initializeEvents();
-
 }])
 .factory('EventFactory', function($http, $cookies) {
 	var getEvents = function() {
